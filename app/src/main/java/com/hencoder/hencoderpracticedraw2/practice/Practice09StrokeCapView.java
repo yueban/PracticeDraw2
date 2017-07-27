@@ -8,7 +8,11 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class Practice09StrokeCapView extends View {
-    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    {
+        mPaint.setStrokeWidth(40);
+    }
 
     public Practice09StrokeCapView(Context context) {
         super(context);
@@ -22,10 +26,6 @@ public class Practice09StrokeCapView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    {
-        paint.setStrokeWidth(40);
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -33,12 +33,15 @@ public class Practice09StrokeCapView extends View {
         // 使用 Paint.setStrokeCap() 来设置端点形状
 
         // 第一个：BUTT
-        canvas.drawLine(50, 50, 400, 50, paint);
+        mPaint.setStrokeCap(Paint.Cap.BUTT);
+        canvas.drawLine(50, 50, 400, 50, mPaint);
 
         // 第二个：ROUND
-        canvas.drawLine(50, 150, 400, 150, paint);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        canvas.drawLine(50, 150, 400, 150, mPaint);
 
         // 第三个：SQUARE
-        canvas.drawLine(50, 250, 400, 250, paint);
+        mPaint.setStrokeCap(Paint.Cap.SQUARE);
+        canvas.drawLine(50, 250, 400, 250, mPaint);
     }
 }

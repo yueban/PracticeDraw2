@@ -9,12 +9,23 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class Practice15FillPathView extends View {
-    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    Paint pathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    Path path = new Path();
-    Path path1 = new Path();
-    Path path2 = new Path();
-    Path path3 = new Path();
+    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mPathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Path mPath = new Path();
+    private final Path mPath1 = new Path();
+    private final Path mPath2 = new Path();
+    private final Path mPath3 = new Path();
+
+    {
+        mPath.moveTo(50, 100);
+        mPath.rLineTo(50, 100);
+        mPath.rLineTo(80, -150);
+        mPath.rLineTo(100, 100);
+        mPath.rLineTo(70, -120);
+        mPath.rLineTo(150, 80);
+
+        mPathPaint.setStyle(Paint.Style.STROKE);
+    }
 
     public Practice15FillPathView(Context context) {
         super(context);
@@ -28,55 +39,47 @@ public class Practice15FillPathView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    {
-        path.moveTo(50, 100);
-        path.rLineTo(50, 100);
-        path.rLineTo(80, -150);
-        path.rLineTo(100, 100);
-        path.rLineTo(70, -120);
-        path.rLineTo(150, 80);
-
-        pathPaint.setStyle(Paint.Style.STROKE);
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         // 使用 Paint.getFillPath() 获取实际绘制的 Path
 
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeWidth(0);
+        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mPaint.setStrokeWidth(0);
         // 第一处：获取 Path
-        canvas.drawPath(path, paint);
+        mPaint.getFillPath(mPath, mPath1);
+        canvas.drawPath(mPath, mPaint);
 
         canvas.save();
         canvas.translate(500, 0);
-        canvas.drawPath(path1, pathPaint);
+        canvas.drawPath(mPath1, mPathPaint);
         canvas.restore();
 
         canvas.save();
         canvas.translate(0, 200);
-        paint.setStyle(Paint.Style.STROKE);
+        mPaint.setStyle(Paint.Style.STROKE);
         // 第二处：设置 Style 为 STROKE 后再获取 Path
-        canvas.drawPath(path, paint);
+        mPaint.getFillPath(mPath, mPath2);
+        canvas.drawPath(mPath, mPaint);
         canvas.restore();
 
         canvas.save();
         canvas.translate(500, 200);
-        canvas.drawPath(path2, pathPaint);
+        canvas.drawPath(mPath2, mPathPaint);
         canvas.restore();
 
         canvas.save();
         canvas.translate(0, 400);
-        paint.setStrokeWidth(40);
+        mPaint.setStrokeWidth(40);
         // 第三处：Style 为 STROKE 并且线条宽度为 40 时的 Path
-        canvas.drawPath(path, paint);
+        mPaint.getFillPath(mPath, mPath3);
+        canvas.drawPath(mPath, mPaint);
         canvas.restore();
 
         canvas.save();
         canvas.translate(500, 400);
-        canvas.drawPath(path3, pathPaint);
+        canvas.drawPath(mPath3, mPathPaint);
         canvas.restore();
     }
 }
